@@ -1,13 +1,25 @@
 import React, { Component } from "react";
 import Search from "./searchForm";
-import SearchResults from "./searchResults";
+import Results from "./searchResults";
+import Header from "./header";
 import axios from "axios";
 
-class Tracker extends Component {
-  state = {
-    persons: [],
-    filteredPersons: []
+const invertDirection = {
+    asc: "desc",
+    desc: "asc"
   };
+
+class Tracker extends Component {
+    constructor(props) {
+        super(props);
+        this.state = { 
+            persons: [],
+            filteredPersons: [],
+            columnToSort: "",
+            sortDirection: "desc",
+         }
+
+    }
 
   componentDidMount() {
     axios.get("https://randomuser.me/api/?results=20").then(({ data }) => {
@@ -18,6 +30,16 @@ class Tracker extends Component {
       });
     });
   }
+
+  handleSort = columnName => {
+    this.setState(state => ({
+      columnToSort: columnName,
+      sortDirection:
+        state.columnToSort === columnName
+          ? invertDirection[state.sortDirection]
+          : "asc"
+    }));
+  };
 
   handleInputChange = event => {
     const searchInput = event.target.value;
@@ -36,10 +58,16 @@ class Tracker extends Component {
 
   render() {
     return (
-      <div className="text-center">
+        <div>
+        <Header />
         <Search handleInputChange={this.handleInputChange} />
-        <SearchResults persons={this.state.filteredPersons} />
-      </div>
+        <Results 
+        persons={this.state.filteredPersons}
+        columnToSort={this.state.columnToSort}
+        sortDirection={this.state.sortDirection}
+        handleSort={this.handleSort}
+        />
+    </div>
     );
   }
 }

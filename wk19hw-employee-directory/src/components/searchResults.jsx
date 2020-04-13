@@ -1,7 +1,6 @@
-
 import React from "react";
 
-function SearchResults({ persons }, { filteredPersons }) {
+function Results({ persons }, { filteredPersons }, handleSort) {
   return (
     <div className="container">
       {" "}
@@ -9,11 +8,13 @@ function SearchResults({ persons }, { filteredPersons }) {
         <table className="table table-striped table-dark table-sortable">
           <thead>
             <tr>
-              <th scope="col">Image</th>
-              <th scope="col">Name</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Email</th>
-              <th scope="col">DOB</th>
+              <th>Image</th>
+              <th>
+                <div onClick={() => handleSort(persons)}>Name</div>
+              </th>
+              <th>Phone</th>
+              <th>Email</th>
+              <th>DOB</th>
             </tr>
           </thead>
           <tbody>
@@ -31,9 +32,8 @@ function SearchResults({ persons }, { filteredPersons }) {
           </tbody>
         </table>
       </div>
-      {}
     </div>
   );
 }
 
-export default SearchResults;
+export default Results;

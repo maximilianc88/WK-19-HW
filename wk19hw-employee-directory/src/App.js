@@ -1,8 +1,9 @@
 import React from 'react';
-import TrackerContainer from './components/trackerContainer'
+import Tracker from './components/trackerContainer'
 
 function App() {
-  return <TrackerContainer />;
-}
+  return (
+    <Tracker />
+  )}
 
 export default App;

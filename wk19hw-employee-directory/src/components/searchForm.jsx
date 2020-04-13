@@ -23,5 +23,4 @@ function Search({ handleInputChange }) {
     </div>
   );
 }
-
 export default Search;
