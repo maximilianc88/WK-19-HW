@@ -1,23 +1,47 @@
-import React from 'react';
-import Container from './container';
-import Row from './row';
-import Col from './col';
+import React, { Component } from "react";
+import Search from "./searchForm";
+import SearchResults from "./searchResults";
+import axios from "axios";
 
-class TrackerContainer extends React.Component{
-    constructor(props) {
-        super(props);
-        this.state = {
-          result: {},
-          search: ''
-        };
+class Tracker extends Component {
+  state = {
+    persons: [],
+    filteredPersons: []
+  };
+
+  componentDidMount() {
+    axios.get("https://randomuser.me/api/?results=20").then(({ data }) => {
+      const persons = data.results;
+      this.setState({
+        persons: persons,
+        filteredPersons: persons
+      });
+    });
+  }
+
+  handleInputChange = event => {
+    const searchInput = event.target.value;
+    const filteredPersons = this.state.persons.filter(person => {
+      let name = person.name.first.toLowerCase();
+      console.log(typeof name);
+      const matchPersons = name.indexOf(searchInput.toLowerCase()) !== -1;
+
+      return matchPersons;
+    });
+
+    this.setState({
+      filteredPersons: filteredPersons
+    });
+  };
+
+  render() {
+    return (
+      <div className="text-center">
+        <Search handleInputChange={this.handleInputChange} />
+        <SearchResults persons={this.state.filteredPersons} />
+      </div>
+    );
+  }
 }
-render(){
-    return(<Container>
-        <Row>
-            <Col size="8" class="px-0"><h1 className="h6 bg-info">Turtle nugget</h1></Col>
-            <Col size="4" class="px-0"><h2 className="h6 bg-success">Holler for a $</h2></Col>
-        </Row>
-    </Container>);
-}}
 
-export default TrackerContainer;
+export default Tracker;

@@ -1,33 +1,27 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React from "react";
 
-function SearchForm(props) {
+function Search({ handleInputChange }) {
   return (
-    <form>
-      <div className="form-group">
-        <label htmlFor="search">Search:</label>
+    <div>
+      <div className="search-bar">
+        <label className="dob-label" htmlFor="dob">
+          DOB
+        </label>
         <input
-          onChange={props.handleInputChange}
-          value={props.value}
-          name="search"
+          type="date"
+          id="dob"
+          onChange={handleInputChange}
+          name="dob"
+        ></input>
+        <input type="date" id="enddate" name="enddate"></input>
+        <input
           type="text"
-          className="form-control"
-          placeholder="Employee search"
-          id="search"
-        />
-        <br />
-        <button onClick={props.handleFormSubmit} className="btn btn-primary">
-          Search
-        </button>
+          placeholder="Search here"
+          onChange={handleInputChange}
+        ></input>
       </div>
-    </form>
+    </div>
   );
 }
 
-SearchForm.propTypes = {
-  children: PropTypes.node,
-  handleInputChange: PropTypes.func,
-  handleFormSubmit: PropTypes.func
-}
-
-export default SearchForm;
+export default Search;
