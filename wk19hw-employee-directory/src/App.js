@@ -1,9 +1,18 @@
+import './index.css';
+import Header from './components/Header';
 import React from 'react';
-import Tracker from './components/trackerContainer'
+import Main from './components/Main';
+import Container from './components/Container';
 
 function App() {
   return (
-    <Tracker />
-  )}
+    <div className="App">
+      <Header />
+      <Container>
+        <Main />
+      </Container>
+    </div>
+  );
+}
 
 export default App;
